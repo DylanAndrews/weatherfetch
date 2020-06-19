@@ -1,1 +1,1 @@
-# weather-gem
+# weatherfetcher
