@@ -1,0 +1,191 @@
+AllCops:
+  DisabledByDefault: true
+  DisplayCopNames: true
+  TargetRubyVersion: 2.7.1
+  Exclude:
+    - 'bin/**/*'
+    - 'vendor/**/*'
+
+# Indent private/protected/public as deep as method definitions
+Layout/AccessModifierIndentation:
+  EnforcedStyle: indent
+
+# Don't use `and` or `or` in conditionals
+Style/AndOr:
+  EnforcedStyle: conditionals
+
+# Prefer compact style module definition
+Style/ClassAndModuleChildren:
+  EnforcedStyle: compact
+  Exclude:
+    - 'config/application.rb'
+
+# Checks formatting of special comments
+Style/CommentAnnotation:
+  Keywords:
+    - TODO
+    - HACK
+    - TEMP
+
+# Align `end` with `def`
+Layout/DefEndAlignment:
+  EnforcedStyleAlignWith: def
+
+# Multi-line method chaining should be done with leading dots.
+Layout/DotPosition:
+  EnforcedStyle: leading
+
+# Warn on empty else statements
+Style/EmptyElse:
+  EnforcedStyle: empty
+
+# Checks for empty lines around the bodies of classes
+Layout/EmptyLinesAroundClassBody:
+  EnforcedStyle: no_empty_lines
+
+# Checks for empty lines around the bodies of modules
+Layout/EmptyLinesAroundModuleBody:
+  EnforcedStyle: no_empty_lines
+
+# `end` should be aligned with the matching keyword (if, while, etc.).
+Layout/EndAlignment:
+  EnforcedStyleAlignWith: keyword
+
+Layout/ExtraSpacing:
+  AllowForAlignment: true
+  ForceEqualSignAlignment: false
+
+# The first parameter should always be indented one step more than the preceding line.
+Layout/FirstParameterIndentation:
+  EnforcedStyle: consistent
+
+# Checks use of for or each in multiline loops.
+Style/For:
+  EnforcedStyle: each
+
+# Force js-style hash syntax
+Style/HashSyntax:
+  EnforcedStyle: ruby19
+
+# Use consistent indentation
+Layout/IndentationConsistency:
+  EnforcedStyle: normal
+
+# Number of spaces for each indentation level.
+Layout/IndentationWidth:
+  Width: 2
+
+# The indentation of the first element shall always be relative to the first position
+# of the line where the opening bracket is.
+Layout/FirstArrayElementIndentation:
+  EnforcedStyle: consistent
+
+Layout/FirstHashElementIndentation:
+  EnforcedStyle: consistent
+
+# Require parens for args in method definitions
+Style/MethodDefParentheses:
+  EnforcedStyle: require_parentheses
+
+# Method names should be snake case
+Naming/MethodName:
+  EnforcedStyle: snake_case
+
+# Use _ to make longer numbers easier to read (eg 100_000)
+Style/NumericLiterals:
+  MinDigits: 6
+
+# Prefer keyword arguments to options hashes.
+Style/OptionHash:
+  SuspiciousParamNames:
+    - options
+    - opts
+    - args
+    - params
+    - parameters
+
+# You don't need parens around conditionals
+Style/ParenthesesAroundCondition:
+  AllowSafeAssignment: true
+
+# Do not allow ; to separate several expressions on the same line.
+Style/Semicolon:
+  AllowAsExpressionSeparator: false
+
+# Do not allow single line methods if they have a body
+Style/SingleLineMethods:
+  AllowIfMethodIsEmpty: true
+
+# Only one space is used between a method name and the first argument for method
+# calls without parentheses.
+Layout/SpaceBeforeFirstArg:
+  AllowForAlignment: true
+
+# Check for parentheses around stabby lambda arguments.
+Style/StabbyLambdaParentheses:
+  EnforcedStyle: require_parentheses
+
+# Require single quotes for strings that don't include interpolation
+Style/StringLiterals:
+  EnforcedStyle: single_quotes
+
+# Require single quotes for strings _inside_ interpolation blocks
+Style/StringLiteralsInInterpolation:
+  EnforcedStyle: single_quotes
+
+# Prefer `to_sym` over `intern`:
+Style/StringMethods:
+  PreferredMethods:
+    intern: to_sym
+
+# No space around block params (eg `| user |`)
+Layout/SpaceAroundBlockParameters:
+  EnforcedStyleInsidePipes: no_space
+
+Layout/SpaceAroundEqualsInParameterDefault:
+  EnforcedStyle: space
+
+# Require space before opening brace of a block
+Layout/SpaceBeforeBlockBraces:
+  EnforcedStyle: space
+
+# Require space around braces
+Layout/SpaceInsideBlockBraces:
+  EnforcedStyle: space
+
+Layout/SpaceInsideHashLiteralBraces:
+  EnforcedStyle: space
+
+Layout/SpaceInsideStringInterpolation:
+  EnforcedStyle: no_space
+
+Style/SymbolArray:
+  Enabled: false
+
+Layout/TrailingEmptyLines:
+  EnforcedStyle: final_newline
+
+Style/TrailingCommaInArguments:
+  EnforcedStyleForMultiline: no_comma
+
+Style/TrailingCommaInArrayLiteral:
+  EnforcedStyleForMultiline: no_comma
+
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyleForMultiline: no_comma
+
+Naming/VariableName:
+  EnforcedStyle: snake_case
+
+##################### Metrics ##################################
+
+Metrics/BlockNesting:
+  Max: 3
+
+Layout/LineLength:
+  Enabled: false
+
+# Avoid parameter lists longer than 3 parameters.
+Metrics/ParameterLists:
+  Max: 3
+  CountKeywordArgs: false
