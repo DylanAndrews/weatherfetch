@@ -8,4 +8,8 @@ Gem::Specification.new do |s|
   s.authors     = ['Dylan Andrews']
   s.email       = ['dylanandr@gmail.com']
   s.files       = ["lib/weatherfetch.rb"]
+
+  s.add_dependency 'httparty'
+  s.add_development_dependency 'pry'
+
 end
