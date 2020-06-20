@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    weatherfetch (0.1.0)
+    weatherfetch (0.0.0)
       httparty (~> 0.17)
       thor (~> 1.0.1)
 
