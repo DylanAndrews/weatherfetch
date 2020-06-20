@@ -1,8 +1,9 @@
 PATH
   remote: .
   specs:
-    weatherfetch (0.0.0)
-      httparty
+    weatherfetch (0.1.0)
+      httparty (~> 0.17)
+      thor (~> 1.0.1)
 
 GEM
   remote: https://rubygems.org/
@@ -19,12 +20,13 @@ GEM
     pry (0.13.1)
       coderay (~> 1.1)
       method_source (~> 1.0)
+    thor (1.0.1)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  pry
+  pry (~> 0.13)
   weatherfetch!
 
 RUBY VERSION

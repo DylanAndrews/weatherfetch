@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require_relative 'lib/weatherfetch/version'
 
 Gem::Specification.new do |s|
   s.name        = 'weatherfetch'
@@ -10,6 +11,7 @@ Gem::Specification.new do |s|
   s.files       = ['lib/weatherfetch.rb']
   s.license     = 'MIT'
 
-  s.add_dependency 'httparty'
-  s.add_development_dependency 'pry'
+  s.add_dependency 'httparty', '~> 0.17'
+  s.add_dependency 'thor', '~> 1.0.1'
+  s.add_development_dependency 'pry', '~> 0.13'
 end
