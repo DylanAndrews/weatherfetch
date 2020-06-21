@@ -2,6 +2,7 @@ require 'httparty'
 require 'thor'
 require 'pry'
 require 'geocoder'
+require 'terminal-table'
 
 module WeatherFetch
   class CLI < Thor
@@ -18,17 +19,29 @@ module WeatherFetch
 
     desc 'hourly', 'Get hourly weather for a given city'
     def hourly(city)
-      longitude, latitude = Geocoder.search(city).first.coordinates
+      latitude, longitude = Geocoder.search(city).first.coordinates
 
       options = {
         query: {
           lat: latitude,
           lon: longitude,
+          exclude: 'daily,minutely,current',
+          units: 'imperial',
           appid: 'c8d7f5fd25b8914cc543ed45e6a40bba'
         }
       }
-      r = HTTParty.get('http://api.openweathermap.org/data/2.5/onecall', options)
-      puts r
+      response = HTTParty.get('http://api.openweathermap.org/data/2.5/onecall', options)
+
+      rows = response['hourly'].map do |hour|
+        [Time.at(hour['dt']).strftime('%m/%d %I %p'), "#{hour['temp']}°F"]
+      end
+
+      table = Terminal::Table.new(
+        rows: rows,
+        headings: ['Hour', 'Temp'],
+        title: city.capitalize
+      )
+      puts table
     end
   end
 end
