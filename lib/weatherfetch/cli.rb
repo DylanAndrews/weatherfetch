@@ -3,6 +3,7 @@ require 'thor'
 require 'pry'
 require 'geocoder'
 require 'terminal-table'
+require 'rainbow'
 
 module WeatherFetch
   class CLI < Thor
@@ -34,18 +35,22 @@ module WeatherFetch
 
       rows = response['hourly'].map do |hour|
         [
-          Time.at(hour['dt']).strftime('%m/%d %I %p'),
-          "#{hour['temp']}°F",
-          "#{hour['feels_like']}°F",
-          hour['weather'][0]['description'].capitalize,
-          "#{hour['humidity']}%"
+          Rainbow(Time.at(hour['dt']).strftime('%m/%d %I %p')).darkolivegreen,
+          Rainbow("#{hour['temp']}°F").darkolivegreen,
+          Rainbow("#{hour['feels_like']}°F").darkolivegreen,
+          Rainbow(hour['weather'][0]['description'].capitalize).darkolivegreen,
+          Rainbow("#{hour['humidity']}%").darkolivegreen
         ]
       end
 
+      headings = ['Hour', 'Actual', 'Feels Like', 'Conditions', 'Humidity'].map do |h|
+        Rainbow(h).red
+      end
+
       table = Terminal::Table.new(
+        headings: headings,
         rows: rows,
-        headings: ['Hour', 'Actual', 'Feels Like', 'Conditions', 'Humidity'],
-        title: city.capitalize
+        title: Rainbow(city.capitalize).cornflower
       )
       puts table
     end
