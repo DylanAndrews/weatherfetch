@@ -33,12 +33,18 @@ module WeatherFetch
       response = HTTParty.get('http://api.openweathermap.org/data/2.5/onecall', options)
 
       rows = response['hourly'].map do |hour|
-        [Time.at(hour['dt']).strftime('%m/%d %I %p'), "#{hour['temp']}°F"]
+        [
+          Time.at(hour['dt']).strftime('%m/%d %I %p'),
+          "#{hour['temp']}°F",
+          "#{hour['feels_like']}°F",
+          hour['weather'][0]['description'].capitalize,
+          "#{hour['humidity']}%"
+        ]
       end
 
       table = Terminal::Table.new(
         rows: rows,
-        headings: ['Hour', 'Temp'],
+        headings: ['Hour', 'Actual', 'Feels Like', 'Conditions', 'Humidity'],
         title: city.capitalize
       )
       puts table
