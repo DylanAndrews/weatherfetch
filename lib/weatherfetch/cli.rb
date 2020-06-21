@@ -20,18 +20,7 @@ module WeatherFetch
 
     desc 'hourly', 'Get hourly weather for a given city'
     def hourly(city)
-      latitude, longitude = Geocoder.search(city).first.coordinates
-
-      options = {
-        query: {
-          lat: latitude,
-          lon: longitude,
-          exclude: 'daily,minutely,current',
-          units: 'imperial',
-          appid: 'c8d7f5fd25b8914cc543ed45e6a40bba'
-        }
-      }
-      response = HTTParty.get('http://api.openweathermap.org/data/2.5/onecall', options)
+      response = fetch_city_data(city, 'hourly')
 
       rows = response['hourly'].map do |hour|
         [
@@ -43,12 +32,8 @@ module WeatherFetch
         ]
       end
 
-      headings = ['Hour', 'Actual', 'Feels Like', 'Conditions', 'Humidity'].map do |h|
-        Rainbow(h).red
-      end
-
       table = Terminal::Table.new(
-        headings: headings,
+        headings: create_headings(['Hour', 'Actual', 'Feels Like', 'Conditions', 'Humidity']),
         rows: rows,
         title: Rainbow(city.capitalize).cornflower
       )
@@ -57,18 +42,7 @@ module WeatherFetch
 
     desc 'daily', 'Get daily weather for a given city'
     def daily(city)
-      latitude, longitude = Geocoder.search(city).first.coordinates
-
-      options = {
-        query: {
-          lat: latitude,
-          lon: longitude,
-          exclude: 'hourly,minutely,current',
-          units: 'imperial',
-          appid: 'c8d7f5fd25b8914cc543ed45e6a40bba'
-        }
-      }
-      response = HTTParty.get('http://api.openweathermap.org/data/2.5/onecall', options)
+      response = fetch_city_data(city, 'daily')
 
       rows = response['daily'].map do |day|
         [
@@ -82,16 +56,35 @@ module WeatherFetch
         ]
       end
 
-      headings = ['Date', 'Morning', 'Afternoon', 'Evening', 'Night', 'Conditions', 'Humidity'].map do |h|
-        Rainbow(h).red
-      end
-
       table = Terminal::Table.new(
-        headings: headings,
+        headings: create_headings(['Date', 'Morning', 'Afternoon', 'Evening', 'Night', 'Conditions', 'Humidity']),
         rows: rows,
         title: Rainbow(city.capitalize).cornflower
       )
       puts table
+    end
+
+    private
+    def create_headings(headings)
+      headings.map { |h| Rainbow(h).red }
+    end
+
+    def fetch_city_data(city, type)
+      latitude, longitude = Geocoder.search(city).first.coordinates
+      exclusions = ['hourly', 'minutely', 'current', 'daily'].reject do |ex|
+        ex == type
+      end
+
+      options = {
+        query: {
+          lat: latitude,
+          lon: longitude,
+          exclude: exclusions.join(','),
+          units: 'imperial',
+          appid: 'c8d7f5fd25b8914cc543ed45e6a40bba'
+        }
+      }
+      response = HTTParty.get('http://api.openweathermap.org/data/2.5/onecall', options)
     end
   end
 end
