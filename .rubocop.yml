@@ -14,12 +14,6 @@ Layout/AccessModifierIndentation:
 Style/AndOr:
   EnforcedStyle: conditionals
 
-# Prefer compact style module definition
-Style/ClassAndModuleChildren:
-  EnforcedStyle: compact
-  Exclude:
-    - 'config/application.rb'
-
 # Checks formatting of special comments
 Style/CommentAnnotation:
   Keywords:
