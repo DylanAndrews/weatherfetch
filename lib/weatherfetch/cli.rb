@@ -37,6 +37,7 @@ module WeatherFetch
         rows: rows,
         title: Rainbow(city.capitalize).cornflower
       )
+
       puts table
     end
 
@@ -56,11 +57,13 @@ module WeatherFetch
         ]
       end
 
-      table = Terminal::Table.new(
-        headings: create_headings(['Date', 'Morning', 'Afternoon', 'Evening', 'Night', 'Conditions', 'Humidity']),
-        rows: rows,
-        title: Rainbow(city.capitalize).cornflower
-      )
+      table = Terminal::Table.new do |t|
+        t.headings = create_headings(['Date', 'Morning', 'Afternoon', 'Evening', 'Night', 'Conditions', 'Humidity'])
+        t.rows = rows
+        t.title = Rainbow(city.capitalize).cornflower
+        t.style = { all_separators: :true }
+      end
+
       puts table
     end
 
@@ -71,6 +74,7 @@ module WeatherFetch
 
     def fetch_city_data(city, type)
       latitude, longitude = Geocoder.search(city).first.coordinates
+
       exclusions = ['hourly', 'minutely', 'current', 'daily'].reject do |ex|
         ex == type
       end
