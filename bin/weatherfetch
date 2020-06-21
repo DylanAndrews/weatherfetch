@@ -9,4 +9,4 @@ require "weatherfetch"
 # (If you use this, don't forget to add pry to your Gemfile!)
 # require "pry"
 # Pry.start
-WeatherFetch::CLI.start( ARGV )
+WeatherFetch::CLI.start

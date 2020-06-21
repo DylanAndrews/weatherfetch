@@ -14,5 +14,6 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'httparty', '~> 0.17'
   s.add_dependency 'thor', '~> 1.0.1'
+  s.add_dependency 'geocoder', '~> 1.6.3'
   s.add_development_dependency 'pry', '~> 0.13'
 end
