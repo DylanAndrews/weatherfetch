@@ -10,6 +10,7 @@ Gem::Specification.new do |s|
   s.email       = ['dylanandr@gmail.com']
   s.files       = ['lib/weatherfetch.rb']
   s.license     = 'MIT'
+  s.executables = 'weatherfetch'
 
   s.add_dependency 'httparty', '~> 0.17'
   s.add_dependency 'thor', '~> 1.0.1'
