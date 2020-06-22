@@ -48,6 +48,8 @@ module WeatherFetch
       rows = response['daily'].map do |day|
         [
           Rainbow(Time.at(day['dt']).strftime('%m/%d')).darkolivegreen,
+          Rainbow("#{day['temp']['min']}°F").darkolivegreen,
+          Rainbow("#{day['temp']['max']}°F").darkolivegreen,
           Rainbow("#{day['temp']['morn']}°F").darkolivegreen,
           Rainbow("#{day['temp']['day']}°F").darkolivegreen,
           Rainbow("#{day['temp']['eve']}°F").darkolivegreen,
@@ -58,7 +60,7 @@ module WeatherFetch
       end
 
       table = Terminal::Table.new do |t|
-        t.headings = create_headings(['Date', 'Morning', 'Afternoon', 'Evening', 'Night', 'Conditions', 'Humidity'])
+        t.headings = create_headings(['Date', 'Min', 'Max', 'Morning', 'Afternoon', 'Evening', 'Night', 'Conditions', 'Humidity'])
         t.rows = rows
         t.title = "🌧  #{Rainbow(location.capitalize).cornflower} 🌞"
         t.style = { all_separators: :true }
