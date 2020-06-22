@@ -1,6 +1,5 @@
 require 'httparty'
 require 'thor'
-require 'pry'
 require 'geocoder'
 require 'terminal-table'
 require 'rainbow'

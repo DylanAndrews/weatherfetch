@@ -9,6 +9,7 @@ Gem::Specification.new do |s|
   s.authors     = ['Dylan Andrews']
   s.email       = ['dylanandr@gmail.com']
   s.files       = ['lib/weatherfetch.rb']
+  s.files       = Dir.glob('{bin,lib}/**/*')
   s.license     = 'MIT'
   s.executables = 'weatherfetch'
 
