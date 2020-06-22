@@ -11,13 +11,6 @@ module WeatherFetch
       true
     end
 
-    desc 'current', 'Get current weather for a given location'
-    def current(location)
-      options = { query: { q: location, appid: 'c8d7f5fd25b8914cc543ed45e6a40bba' } }
-      r = HTTParty.get('http://api.openweathermap.org/data/2.5/weather', options)
-      puts r
-    end
-
     desc 'hourly', 'Get hourly weather for a given location'
     def hourly(location)
       response = fetch_location_data(location, 'hourly')
