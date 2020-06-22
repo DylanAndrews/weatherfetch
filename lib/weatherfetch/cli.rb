@@ -3,6 +3,7 @@ require 'thor'
 require 'geocoder'
 require 'terminal-table'
 require 'rainbow'
+require 'pry'
 
 module WeatherFetch
   class CLI < Thor
@@ -10,16 +11,16 @@ module WeatherFetch
       true
     end
 
-    desc 'current', 'Get current weather for a given city'
-    def current(city)
-      options = { query: { q: city, appid: 'c8d7f5fd25b8914cc543ed45e6a40bba' } }
+    desc 'current', 'Get current weather for a given location'
+    def current(location)
+      options = { query: { q: location, appid: 'c8d7f5fd25b8914cc543ed45e6a40bba' } }
       r = HTTParty.get('http://api.openweathermap.org/data/2.5/weather', options)
       puts r
     end
 
-    desc 'hourly', 'Get hourly weather for a given city'
-    def hourly(city)
-      response = fetch_city_data(city, 'hourly')
+    desc 'hourly', 'Get hourly weather for a given location'
+    def hourly(location)
+      response = fetch_location_data(location, 'hourly')
 
       rows = response['hourly'].map do |hour|
         [
@@ -34,15 +35,15 @@ module WeatherFetch
       table = Terminal::Table.new(
         headings: create_headings(['Hour', 'Actual', 'Feels Like', 'Conditions', 'Humidity']),
         rows: rows,
-        title: Rainbow(city.capitalize).cornflower
+        title: "🌧  #{Rainbow(location.capitalize).cornflower} 🌞"
       )
 
       puts table
     end
 
-    desc 'daily', 'Get daily weather for a given city'
-    def daily(city)
-      response = fetch_city_data(city, 'daily')
+    desc 'daily', 'Get daily weather for a given location'
+    def daily(location)
+      response = fetch_location_data(location, 'daily')
 
       rows = response['daily'].map do |day|
         [
@@ -59,7 +60,7 @@ module WeatherFetch
       table = Terminal::Table.new do |t|
         t.headings = create_headings(['Date', 'Morning', 'Afternoon', 'Evening', 'Night', 'Conditions', 'Humidity'])
         t.rows = rows
-        t.title = Rainbow(city.capitalize).cornflower
+        t.title = "🌧  #{Rainbow(location.capitalize).cornflower} 🌞"
         t.style = { all_separators: :true }
       end
 
@@ -71,8 +72,8 @@ module WeatherFetch
       headings.map { |h| Rainbow(h).red }
     end
 
-    def fetch_city_data(city, type)
-      latitude, longitude = Geocoder.search(city).first.coordinates
+    def fetch_location_data(location, type)
+      latitude, longitude = Geocoder.search(location).first.coordinates
 
       exclusions = ['hourly', 'minutely', 'current', 'daily'].reject do |ex|
         ex == type
