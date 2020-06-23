@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    weatherfetch (0.0.1)
+    weatherfetch (0.0.3)
       geocoder (~> 1.6.3)
       httparty (~> 0.17)
       rainbow (~> 3.0)

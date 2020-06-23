@@ -28,7 +28,7 @@ Or install it yourself as:
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/weatherfetch.
+Bug reports and pull requests are welcome on GitHub at https://github.com/DylanAndrews/weatherfetch.
 
 ## License
 
