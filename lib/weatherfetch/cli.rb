@@ -71,7 +71,9 @@ module WeatherFetch
       country = @location_data.data.dig('address', 'country_code').upcase
       state = @location_data.data.dig('address', 'state')
 
-      title = [city, state, country].each_with_object('') do |loc, str|
+      cleaned_city = city && city.split('-').first
+
+      title = [cleaned_city, state, country].each_with_object('') do |loc, str|
         str << "#{loc}, " if loc
       end
 
