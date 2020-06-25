@@ -54,7 +54,7 @@ module WeatherFetch
       table = Terminal::Table.new do |t|
         t.headings = create_headings(['Date', 'Min', 'Max', 'Morning', 'Afternoon', 'Evening', 'Night', 'Conditions', 'Humidity'])
         t.rows = rows
-        t.title = "🌧  #{Rainbow(get_title).cornflower} 🌞"
+        t.title = "#{Rainbow(get_title).cornflower}"
         t.style = { all_separators: :true }
       end
 
@@ -72,12 +72,13 @@ module WeatherFetch
       state = @location_data.data.dig('address', 'state')
 
       cleaned_city = city && city.split('-').first
+      flag = country.tr('A-Z', "\u{1F1E6}-\u{1F1FF}")
 
       title = [cleaned_city, state, country].each_with_object('') do |loc, str|
         str << "#{loc}, " if loc
       end
 
-      title.delete_suffix(', ')
+      "#{flag}  #{title.delete_suffix(', ')} #{flag}"
     end
 
     def fetch_location_data(location, type)
