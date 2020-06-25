@@ -54,7 +54,7 @@ module WeatherFetch
       table = Terminal::Table.new do |t|
         t.headings = create_headings(['Date', 'Min', 'Max', 'Morning', 'Afternoon', 'Evening', 'Night', 'Conditions', 'Humidity'])
         t.rows = rows
-        t.title = "🌧  #{Rainbow(location.capitalize).cornflower} 🌞"
+        t.title = "🌧  #{Rainbow(get_title).cornflower} 🌞"
         t.style = { all_separators: :true }
       end
 
@@ -66,23 +66,40 @@ module WeatherFetch
       headings.map { |h| Rainbow(h).red }
     end
 
-    def fetch_location_data(location, type)
-      latitude, longitude = Geocoder.search(location).first.coordinates
+    def get_title
+      city = @location_data.data.dig('address', 'city')
+      country = @location_data.data.dig('address', 'country_code').upcase
+      state = @location_data.data.dig('address', 'state')
 
-      exclusions = ['hourly', 'minutely', 'current', 'daily'].reject do |ex|
-        ex == type
+      title = [city, state, country].each_with_object('') do |loc, str|
+        str << "#{loc}, " if loc
       end
 
-      options = {
-        query: {
-          lat: latitude,
-          lon: longitude,
-          exclude: exclusions.join(','),
-          units: 'imperial',
-          appid: 'c8d7f5fd25b8914cc543ed45e6a40bba'
+      title.delete_suffix(', ')
+    end
+
+    def fetch_location_data(location, type)
+      if @location_data = Geocoder.search(location).first
+        latitude, longitude = @location_data.coordinates
+
+        exclusions = ['hourly', 'minutely', 'current', 'daily'].reject do |ex|
+          ex == type
+        end
+
+        options = {
+          query: {
+            lat: latitude,
+            lon: longitude,
+            exclude: exclusions.join(','),
+            units: 'imperial',
+            appid: 'c8d7f5fd25b8914cc543ed45e6a40bba'
+          }
         }
-      }
-      response = HTTParty.get('http://api.openweathermap.org/data/2.5/onecall', options)
+        response = HTTParty.get('http://api.openweathermap.org/data/2.5/onecall', options)
+      else
+        puts Rainbow('Please enter a valid location').red
+        exit
+      end
     end
   end
 end
