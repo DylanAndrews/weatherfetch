@@ -3,7 +3,6 @@ require 'thor'
 require 'geocoder'
 require 'terminal-table'
 require 'rainbow'
-require 'pry'
 
 module WeatherFetch
   class CLI < Thor
