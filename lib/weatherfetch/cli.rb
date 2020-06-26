@@ -3,6 +3,7 @@ require 'thor'
 require 'geocoder'
 require 'terminal-table'
 require 'rainbow'
+require 'pry'
 
 module WeatherFetch
   class CLI < Thor
@@ -27,7 +28,7 @@ module WeatherFetch
       table = Terminal::Table.new(
         headings: create_headings(['Hour', 'Actual', 'Feels Like', 'Conditions', 'Humidity']),
         rows: rows,
-        title: "🌧  #{Rainbow(location.capitalize).cornflower} 🌞"
+        title: "#{Rainbow(get_title).cornflower}"
       )
 
       puts table
